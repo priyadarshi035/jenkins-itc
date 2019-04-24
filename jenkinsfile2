@@ -1,10 +1,61 @@
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
-ScriptApproval script = ScriptApproval.get()
-ConfigObject conf = new ConfigSlurper().parse(new File(System.getenv("JENKINS_HOME") + '/jenkins_config/scriptApproval.txt').text)
-conf.scriptApproval.approvedSignatures.each{ approvedSignature ->
-  println("checking for new signature ${approvedSignature}")
-  def found = script.approvedSignatures.find { it == approvedSignature }
- if (!found){
-   println("Approving signature ${approvedSignature}")
-   script.approveSignature(approvedSignature)
- }
+
+  
+
+def method = "something"
+
+def signature = "something"
+
+
+
+ScriptApproval sa = ScriptApproval.get();
+
+
+
+//list pending approvals
+
+for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
+
+        println "Pending Approved : " + pending.script
+
+}
+
+
+
+for (ScriptApproval.PendingSignature pending : sa.getPendingSignatures()) {
+
+        println "Pending Approved : " + pending.signature
+
+}  
+
+
+
+// approve scripts
+
+for (ScriptApproval.PendingScript pending : sa.getPendingScripts()) {
+
+   if (pending.script.equals(method)) {
+
+       	sa.approveScript(pending.getHash());
+
+     	println "Approved : " + pending.script
+
+      }
+
+}
+
+
+
+// approve signatures
+
+for (ScriptApproval.PendingSignature pending : sa.getPendingSignatures()) {
+
+   if (pending.equals(signature)) {
+
+       	sa.approveSignature(pending.signature);
+
+     	println "Approved : " + pending.signature
+
+      }
+
+}
