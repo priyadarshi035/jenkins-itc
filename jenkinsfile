@@ -1,77 +1,156 @@
 import groovy.util.XmlSlurper
+
 import groovy.util.XmlParser
+
 import groovy.util.slurpersupport.GPathResult
+
 import groovy.util.*
+
 import java.nio.file.*
+
 import org.apache.commons.io.FilenameUtils
+
 import groovy.xml.*
+
 import groovy.xml.MarkupBuilder
+
+
 
 node{
 
+
+try {
     checkout scm
+
     properties([
+
                                                 parameters([
+
                                                                 stringParam(name: 'TEST_EXECUTION_SUITES', defaultValue: 'junit-suite,parent-module-suite',description: 'Suite list'),
+
                                                                 stringParam(name: 'TEST_EXECUTION_BROWSERS', defaultValue: 'chrome,firefox',description: 'Browser list')
+
                                                 ])
+
                                    ])
+
                 stage('Update TestNG.xml') {
+
                                 
+
                 def comb= newlist()
+
                 def nodes =[]
+
                 def Available_Suites =[]
+
                 def Deleted_Suites =[]
+
                 def parent
+
                 println "Suites from input: ${comb}"
+
     def xml = readFile "${env.WORKSPACE}/testng1.xml"
+
                 def response1 = new XmlParser(false,false,true)
+
                 response1.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+
                 def response = response1.parseText(xml)
+
     def suitesfiles = response.'**'.findAll { node -> node.name() == 'suite-files' }
+
                 def suitesfilesLength= suitesfiles[0].children().size()
+
                 println "No of Suite available: ${suitesfilesLength}"
+
                 for(int i=0; i < suitesfilesLength ; i++){
+
                 Path p = Paths.get("${suitesfiles[0].children()[i].@path}");
+
                 String file = p.getFileName().toString();
+
                 Available_Suites << FilenameUtils.removeExtension(file).trim()
+
                 
+
                 if (!comb.contains(FilenameUtils.removeExtension(file).trim())){
+
         nodes << suitesfiles[0].children()[i]
+
                                 Deleted_Suites << FilenameUtils.removeExtension(file).trim()
+
                                 parent=suitesfiles[0].children()[i].parent()
+
                                 
+
         }
+
                 }
+
                 println "Available_Suites: ${Available_Suites}"
+
                 
+
                 for(int i=0; i < nodes.size() ; i++){
+
                 println "removing suite: ${nodes[i].@path}"
+
                 parent.remove(nodes[i])
+
                 }
+
                 println "Deleted_Suites: ${Deleted_Suites}"
+
                 
+
                 def xmlOutput = new StringWriter()
+
     XmlUtil.serialize response, xmlOutput
+
     //assert xmlOutput.toString() == prettyXml
+
     println xmlOutput.toString()
+
                 
+
                 def writer = new FileWriter("${env.WORKSPACE}/testng1.xml")
+
     XmlUtil.serialize(response, writer)
+
                 }
+
 
 }
+} catch (e) {
+println (e)
+}
+}
+
+
 
 def newlist() { 
+
         def test_suites = params.TEST_EXECUTION_SUITES.split(',').collect{it as String}
+
         def test_browsers=params.TEST_EXECUTION_BROWSERS.split(',').collect{it as String}
+
         def test_suites_size = test_suites.size()
+
         def test_browsers_size = test_browsers.size()
+
                                 def new_list =[]
+
         for (int i=0; i < test_suites_size ; i++) {
+
             for (int j=0 ; j <test_browsers_size ; j++ ) {
+
                  new_list << test_suites.get(i).trim()+"^_"+test_browsers.get(j).trim()
+
             }
+
                                 }
+
                 return new_list
+
 }
