@@ -19,7 +19,7 @@ import groovy.xml.MarkupBuilder
 node{
 
 
-try {
+
     checkout scm
 
     properties([
@@ -36,7 +36,7 @@ try {
 
                 stage('Update TestNG.xml') {
 
-                                
+                   try {             
 
                 def comb= newlist()
 
@@ -117,14 +117,16 @@ try {
                 def writer = new FileWriter("${env.WORKSPACE}/testng1.xml")
 
     XmlUtil.serialize(response, writer)
+	
+	} catch (e) {
+println (e)
+}
 
                 }
 
 
 }
-} catch (e) {
-println (e)
-}
+
 }
 
 
