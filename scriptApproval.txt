@@ -1,0 +1,9 @@
+scriptApproval{
+
+    approvedSignatures=[
+
+      'new groovy.util.XmlParser boolean boolean boolean'
+
+    ]
+
+}
