@@ -17,7 +17,7 @@ node{
                                                 ])
                                    ])
                 stage('Update TestNG.xml') {
-                  try{              
+                                
                 def comb= newlist()
                 def nodes =[]
                 def Available_Suites =[]
@@ -59,8 +59,7 @@ node{
                 def writer = new FileWriter("${env.WORKSPACE}/testng1.xml")
     XmlUtil.serialize(response, writer)
                 }
-} catch(Exception e){
- println (e)}
+
 }
 
 def newlist() { 
