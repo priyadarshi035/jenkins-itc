@@ -15,7 +15,7 @@ import groovy.xml.*
 
 import groovy.xml.MarkupBuilder
 
-/*
+
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
 def method = "something"
 def signature = "something"
@@ -27,7 +27,7 @@ for (ScriptApproval.PendingSignature pending : sa.getPendingSignatures()) {
        	sa.approveSignature(pending.signature);
      	println "Approved : " + pending.signature
 }
-*/
+
 node{
 
 
