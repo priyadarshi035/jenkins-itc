@@ -1,5 +1,5 @@
 
-def signature2 = 'new groovy.util.XmlParser'
+def signature2 = 'new groovy.util.*'
 org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval.get().approveSignature(signature2)
 def signature = 'new groovy.util.XmlParser boolean boolean boolean'
 org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval.get().approveSignature(signature)
