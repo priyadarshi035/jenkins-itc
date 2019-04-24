@@ -59,7 +59,7 @@ node{
                 def writer = new FileWriter("${env.WORKSPACE}/testng1.xml")
     XmlUtil.serialize(response, writer)
                 }
-}catch(Exception e){
+} catch(Exception e){
  println (e)}
 }
 
