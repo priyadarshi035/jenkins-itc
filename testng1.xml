@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="TestNG" verbose="1" parallel="false" thread-count="2" data-provider-thread-count="3">
+  <suite-files>
+    <suite-file path="./junit-suite^_firefox.xml"/>
+    <suite-file path="./parent-module-suite^_firefox.xml"/>
+    <suite-file path="./junit-suite^_chrome.xml"/>
+    <suite-file path="./parent-module-suite^_chrome.xml"/>
+  </suite-files>
+</suite>
