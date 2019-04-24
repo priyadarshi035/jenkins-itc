@@ -1,8 +1,3 @@
-
-import org.jenkinsci.plugins.scriptsecurity.scripts.*
-toApprove = ScriptApproval.get().getPendingScripts().collect()
-toApprove.each {pending -> ScriptApproval.get().approveScript(pending.getHash())}
-
 import groovy.util.XmlSlurper
 import groovy.util.XmlParser
 import groovy.util.slurpersupport.GPathResult
