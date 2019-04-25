@@ -29,7 +29,7 @@ for (ScriptApproval.PendingSignature pending : sa.getPendingSignatures()) {
 */
 node{
 
-    label 'ec2-node' 
+    
 
     checkout scm
 
