@@ -14,6 +14,8 @@ import groovy.xml.*
 
 import groovy.xml.MarkupBuilder
 
+import org.jenkinsci.plugins.scriptsecurity.scripts.*
+
 /*
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
 def method = "something"
@@ -132,7 +134,7 @@ node{
 	
 	} catch (e) {
 println (e)
-import org.jenkinsci.plugins.scriptsecurity.scripts.*
+
 def method = "something"
 def signature = "something"
 ScriptApproval sa = ScriptApproval.get();
